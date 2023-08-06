@@ -9,6 +9,7 @@ import 'package:provider/provider.dart';
 
 import '../../common/widgets/action_button.dart';
 import '../../common/widgets/expandable.dart';
+import '../../features/search/screens/search_screen.dart';
 import '../widgets/top_categories.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -20,6 +21,11 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+
+    void navigateToSearchScreen(String query) {
+    Navigator.pushNamed(context, SearchScreen.routeName, arguments: query);
+  }
+  
   @override
   Widget build(BuildContext context) {
     final user = Provider.of<UserProvider>(context).user;
@@ -39,6 +45,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       borderRadius: BorderRadius.circular(8),
                     ),
                     child: TextFormField(
+                      onFieldSubmitted: navigateToSearchScreen,
                       decoration: const InputDecoration(
                         contentPadding: EdgeInsets.symmetric(vertical: 8),
                         isDense: true,

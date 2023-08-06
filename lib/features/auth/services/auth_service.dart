@@ -6,6 +6,7 @@ import 'package:ecomm/constants/error_handling.dart';
 import 'package:ecomm/constants/global_variables.dart';
 import 'package:ecomm/constants/utils.dart';
 import 'package:ecomm/features/admin/screens/add_product_screen.dart';
+import 'package:ecomm/features/admin/screens/admin_screen.dart';
 import 'package:ecomm/home/screens/homescreen.dart';
 import 'package:ecomm/models/user.dart';
 import 'package:flutter/material.dart';
@@ -73,27 +74,29 @@ class AuthService {
           SharedPreferences prefs = await SharedPreferences.getInstance();
 
           String responseBody = res.body;
-        Map<String, dynamic> userData = jsonDecode(responseBody);
-        String userType = userData['type'];
+          Map<String, dynamic> userData = jsonDecode(responseBody);
+          String userType = userData['type'];
 
-          Provider.of<UserProvider>(context, listen: false).setUser(res.body); //get data
-          await prefs.setString('x-auth-token', jsonDecode(res.body)['token']); //saving the token
+          Provider.of<UserProvider>(context, listen: false)
+              .setUser(res.body); //get data
+          await prefs.setString(
+              'x-auth-token', jsonDecode(res.body)['token']); //saving the token
 
           if (userType == 'admin') {
-          // Navigate to AdminScreen for admin user
-          Navigator.pushNamedAndRemoveUntil(
-            context,
-            AddCategory.routeName,
-            (route) => false,
-          );
-        } else {
-          // Navigate to HomeScreen for other users
-          Navigator.pushNamedAndRemoveUntil(
-            context,
-            HomeScreen.routeName,
-            (route) => false,
-          );
-        }
+            // Navigate to AdminScreen for admin user
+            Navigator.pushNamedAndRemoveUntil(
+              context,
+              AdminScreen.routeName,
+              (route) => false,
+            );
+          } else {
+            // Navigate to HomeScreen for other users
+            Navigator.pushNamedAndRemoveUntil(
+              context,
+              HomeScreen.routeName,
+              (route) => false,
+            );
+          }
         },
       );
     } catch (e) {
@@ -107,13 +110,17 @@ class AuthService {
   ) async {
     try {
       SharedPreferences prefs = await SharedPreferences.getInstance();
-      String? token = prefs.getString('x-auth-token');  //if token found, it will return that. Else null
+      String? token = prefs.getString(
+          'x-auth-token'); //if token found, it will return that. Else null
 
-      if (token == null) {    //put the token if null.
-        prefs.setString('x-auth-token', '');    //means user has accessed the application for the first time.
+      if (token == null) {
+        //put the token if null.
+        prefs.setString('x-auth-token',
+            ''); //means user has accessed the application for the first time.
       }
 
-      var tokenRes = await http.post(         //go to auth.js for verifying the token
+      var tokenRes = await http.post(
+        //go to auth.js for verifying the token
         Uri.parse('$uri/tokenIsValid'),
         headers: <String, String>{
           'Content-Type': 'application/json; charset=UTF-8',
@@ -121,7 +128,7 @@ class AuthService {
         },
       );
 
-      var response = jsonDecode(tokenRes.body);     //get response as true or false.
+      var response = jsonDecode(tokenRes.body); //get response as true or false.
 
       if (response == true) {
         http.Response userRes = await http.get(
@@ -140,7 +147,6 @@ class AuthService {
     }
   }
 
-
   //log out(part of account_services.dart)
   void logOut(BuildContext context) async {
     try {
@@ -156,6 +162,4 @@ class AuthService {
       showSnackBar(context, e.toString());
     }
   }
-
-
 }

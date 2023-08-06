@@ -7,7 +7,7 @@ const adminRouter = require("./routes/admin");
 
 //IMPORT OTHER FILES
 const authRouter = require("./routes/auth");
-// const productRouter = require("./routes/product");
+const productRouter = require("./routes/product");
 // const userRouter = require("./routes/user");
 
 //INIT
@@ -19,7 +19,7 @@ const DB = "mongodb+srv://rhea:Mongo123@cluster0.6lfdkly.mongodb.net/?retryWrite
 app.use(express.json());
 app.use(authRouter);
 app.use(adminRouter);
-
+app.use(productRouter);
 //connecting mongoose
 mongoose
     .connect(DB)

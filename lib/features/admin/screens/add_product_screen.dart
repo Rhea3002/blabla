@@ -8,6 +8,7 @@ import 'package:provider/provider.dart';
 import '../../../common/widgets/custom_textfield.dart';
 import '../../../constants/utils.dart';
 import '../../../providers/user_provider.dart';
+import '../../auth/services/auth_service.dart';
 
 //-----------------------------------------------------------ADD PRODUCT SCREEN CLASS-----------------------------------------
 class AddProductScreen extends StatefulWidget {
@@ -33,7 +34,7 @@ class _AddProductScreenState extends State<AddProductScreen> {
   List<File> images = [];
   List<String> keywordlist = []; //KEYWORD
   String userInput = '';
-  String userId = '';
+  String useremail = '';
   final _addProductFormKey = GlobalKey<FormState>();
 
   @override
@@ -73,7 +74,7 @@ class _AddProductScreenState extends State<AddProductScreen> {
         ram: double.parse(ram_controller.text),
         rom: double.parse(rom_controller.text),
         screentech: screentech_controller.text,
-        // userId : userId,
+        userId: useremail,
       );
     }
   }
@@ -96,9 +97,10 @@ class _AddProductScreenState extends State<AddProductScreen> {
     );
   }
 
+  @override
   Widget build(BuildContext context) {
     final user = Provider.of<UserProvider>(context).user;
-    userId = user.id.toString();
+    useremail = user.email;
 
     return Scaffold(
         appBar: AppBar(
@@ -194,6 +196,7 @@ class _AddProductScreenState extends State<AddProductScreen> {
                     //KeyWORD FOR SEARCHES
                     TextFormField(
                       decoration: const InputDecoration(
+                          hintText: 'Keywords',
                           border: OutlineInputBorder(
                               borderSide: BorderSide(
                             color: Colors.black38,
@@ -207,10 +210,10 @@ class _AddProductScreenState extends State<AddProductScreen> {
                       },
                     ),
 
-                    // SizedBox(height: 10),
-                    // Container(
-                    //   child: Text(userId),
-                    // ),
+                    SizedBox(height: 10),
+                    Container(
+                      child: Text("Email:  $useremail " ),
+                    ),
 
                     //----------------------------------------------------
 
@@ -297,6 +300,12 @@ class _AddCategoryState extends State<AddCategory> {
           ]),
         ),
       ),
+      floatingActionButton: FloatingActionButton(
+          onPressed: () => AuthService().logOut(context),
+          backgroundColor: Colors.green,
+          child: const Icon(Icons.logout),
+        ),
+        floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
     );
   }
 }

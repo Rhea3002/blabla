@@ -1,6 +1,8 @@
+import 'dart:convert';
 import 'dart:io';
 
 import 'package:cloudinary_public/cloudinary_public.dart';
+import 'package:ecomm/features/admin/screens/admin_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:http/http.dart' as http;
@@ -24,7 +26,7 @@ class AdminServices {
     required String category,
     required List<File> images,
      required List<String> keywordlist,
-    //  String? userId,
+     required String userId,
   }) async {
     final userProvider = Provider.of<UserProvider>(context, listen: false);
 
@@ -51,7 +53,7 @@ class AdminServices {
         screentech: screentech,
         os: os,
         keywordlist: keywordlist,
-        // userId: userId,
+        userId: userId,
       );
 
       http.Response res = await http.post(
@@ -68,11 +70,76 @@ class AdminServices {
         context: context,
         onSuccess: () {
           showSnackBar(context, 'Product Added Successfully!');
-          Navigator.pop(context);
+          Navigator.push(context, MaterialPageRoute(builder: (context) => AdminScreen())
+           );
         },
       );
     }
     catch (e) {
+      showSnackBar(context, e.toString());
+    }
+  }
+
+  // get all the products
+  Future<List<Product>> fetchAllProducts(BuildContext context) async {
+    final userProvider = Provider.of<UserProvider>(context, listen: false);
+    List<Product> productList = [];
+    try {
+      http.Response res =
+          await http.get(Uri.parse('$uri/admin/get-products'), headers: {
+        'Content-Type': 'application/json; charset=UTF-8',
+        'x-auth-token': userProvider.user.token,
+      });
+
+      httpErrorHandle(
+        response: res,
+        context: context,
+        onSuccess: () {
+          for (int i = 0; i < jsonDecode(res.body).length; i++) {
+            productList.add(
+              Product.fromJson(
+                jsonEncode(
+                  jsonDecode(res.body)[i],
+                ),
+              ),
+            );
+          }
+        },
+      );
+    } catch (e) {
+      showSnackBar(context, e.toString());
+    }
+    return productList;
+  }
+
+    void deleteProduct({
+    required BuildContext context,
+    required Product product,
+    required VoidCallback onSuccess,
+  }) async {
+    final userProvider = Provider.of<UserProvider>(context, listen: false);
+
+    try {
+      http.Response res = await http.post(
+        Uri.parse('$uri/admin/delete-product'),
+        headers: {
+          'Content-Type': 'application/json; charset=UTF-8',
+          'x-auth-token': userProvider.user.token,
+        },
+        body: jsonEncode({
+          'id': product.id,
+        }),
+      );
+
+      httpErrorHandle(
+        response: res,
+        context: context,
+        onSuccess: () {
+          onSuccess();
+           showSnackBar(context, 'Product Deleted Successfully!');
+        },
+      );
+    } catch (e) {
       showSnackBar(context, e.toString());
     }
   }

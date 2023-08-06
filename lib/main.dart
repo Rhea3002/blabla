@@ -51,7 +51,7 @@ class _MyAppState extends State<MyApp> {
     home: Provider.of<UserProvider>(context).user.token.isNotEmpty
         ? Provider.of<UserProvider>(context).user.type == 'user'
             ? const HomeScreen()
-            : const AddCategory()
+            : const AdminScreen()
         : const AuthScreen());
   }
 }

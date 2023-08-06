@@ -12,7 +12,7 @@ class Product {
   final String screentech;
   final String os;
   final List<String> keywordlist;
-  // final String? userId;
+  final String? userId;
   final String? id;
 
   Product(
@@ -28,7 +28,7 @@ class Product {
       required this.os,
       required this.keywordlist,
       this.id,
-      // this.userId
+      this.userId
       });
 
   Map<String, dynamic> toMap() {
@@ -45,7 +45,7 @@ class Product {
       'os': os,
       'keywordlist': keywordlist,
       'id': id,
-      // 'userId': userId,
+      'userId': userId,
     };
   }
 
@@ -62,8 +62,8 @@ class Product {
       rom: map['rom']?.toDouble() ?? 0.0,
       screentech: map['screentech'] ?? '',
       os: map['os'] ?? '',
-        id: map['_id'],
-        // userId: map['userId']
+      id: map['_id'],
+      userId: map['userId']
 
         // rating: map['ratings'] != null
         //     ? List<Rating>.from(

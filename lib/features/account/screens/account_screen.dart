@@ -74,8 +74,9 @@ class _AccountScreenState extends State<AccountScreen> {
         ),
         floatingActionButton: ExpandableFAB(distance: 120, children: [
           ActionButton(
-            icon: Icon(Icons.logout_outlined, color: Colors.white),
-            onPressed: () => AuthService().logOut(context),
+            icon: Icon(Icons.shopping_cart_rounded, color: Colors.white),
+            onPressed: () {}
+            // => AuthService().logOut(context),
           ),
           ActionButton(
             icon: Icon(Icons.person, color: Colors.white),

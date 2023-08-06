@@ -6,6 +6,7 @@ import 'package:ecomm/features/auth/screens/auth_screen.dart';
 import 'package:ecomm/home/screens/homescreen.dart';
 import 'package:flutter/material.dart';
 
+import 'features/search/screens/search_screen.dart';
 import 'home/screens/category_deals_screen.dart';
 
 Route<dynamic> generateRoute(RouteSettings routeSettings) {
@@ -46,6 +47,14 @@ Route<dynamic> generateRoute(RouteSettings routeSettings) {
         settings: routeSettings,
         builder: (_) => CategoryDealsScreen(
           category: category,
+        ),
+      );
+      case SearchScreen.routeName:
+      var searchQuery = routeSettings.arguments as String;
+      return MaterialPageRoute(
+        settings: routeSettings,
+        builder: (_) => SearchScreen(
+          searchQuery: searchQuery,
         ),
       );
     default:

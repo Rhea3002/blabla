@@ -55,9 +55,9 @@ const productSchema = mongoose.Schema({
     required: true,
   },
 
-  // userId:{
-  //   type: String,
-  // }
+  userId:{
+    type: String,
+  }
 //   ratings: [ratingSchema],
 });
 
