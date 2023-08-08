@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 
 import '../../../common/widgets/loader.dart';
 import '../../../models/product.dart';
+import '../../product_details/screens/product_details_screen.dart';
 import '../services/search_services.dart';
 
 class SearchScreen extends StatefulWidget {
@@ -83,19 +84,19 @@ class _SearchScreenState extends State<SearchScreen> {
                   child: ListView.builder(
                     itemCount: products!.length,
                     itemBuilder: (context, index) {
-                      // return GestureDetector(
-                      //   onTap: () {
-                      //     Navigator.pushNamed(
-                      //       context,
-                      //       ProductDetailScreen.routeName,
-                      //       arguments: products![index],
-                      //     );
-                      //   },
-                      //   child: SearchedProduct(
-                      //     product: products![index],
-                      //   ),
-                      // );
-                      return SearchedProduct(product: products![index]);
+                      return GestureDetector(
+                        onTap: () {
+                          Navigator.pushNamed(
+                            context,
+                            ProductDetailScreen.routeName,
+                            arguments: products![index],
+                          );
+                        },
+                        child: SearchedProduct(
+                          product: products![index],
+                        ),
+                      );
+                      // return SearchedProduct(product: products![index]);
                     },
                   ),
                 ),

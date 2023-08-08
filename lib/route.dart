@@ -3,7 +3,9 @@ import 'package:ecomm/features/admin/screens/add_product_screen.dart';
 //import 'package:ecomm/features/admin/screens/add_product_screen.dart';
 import 'package:ecomm/features/admin/screens/admin_screen.dart';
 import 'package:ecomm/features/auth/screens/auth_screen.dart';
+import 'package:ecomm/features/product_details/screens/product_details_screen.dart';
 import 'package:ecomm/home/screens/homescreen.dart';
+import 'package:ecomm/models/product.dart';
 import 'package:flutter/material.dart';
 
 import 'features/search/screens/search_screen.dart';
@@ -55,6 +57,14 @@ Route<dynamic> generateRoute(RouteSettings routeSettings) {
         settings: routeSettings,
         builder: (_) => SearchScreen(
           searchQuery: searchQuery,
+        ),
+      );
+      case ProductDetailScreen.routeName:
+      var product = routeSettings.arguments as Product;
+      return MaterialPageRoute(
+        settings: routeSettings,
+        builder: (_) => ProductDetailScreen(
+          product: product,
         ),
       );
     default:

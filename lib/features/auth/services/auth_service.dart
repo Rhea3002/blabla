@@ -28,7 +28,7 @@ class AuthService {
     required String type,
   }) async {
     try {
-      User user = User(
+      User user = User( 
         address: '',
         id: '',
         name: name,
@@ -36,6 +36,7 @@ class AuthService {
         password: password,
         type: type,
         token: '',
+        cart: [],
       );
       http.Response res = await http.post(Uri.parse('$uri/api/signup'),
           body: user.toJson(),
@@ -84,7 +85,7 @@ class AuthService {
 
           if (userType == 'admin') {
             // Navigate to AdminScreen for admin user
-            Navigator.pushNamedAndRemoveUntil(
+            Navigator.pushNamedAndRemoveUntil( 
               context,
               AdminScreen.routeName,
               (route) => false,

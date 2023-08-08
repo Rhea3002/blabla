@@ -8,6 +8,7 @@ const adminRouter = require("./routes/admin");
 //IMPORT OTHER FILES
 const authRouter = require("./routes/auth");
 const productRouter = require("./routes/product");
+const userRouter = require("./routes/user");
 // const userRouter = require("./routes/user");
 
 //INIT
@@ -20,6 +21,7 @@ app.use(express.json());
 app.use(authRouter);
 app.use(adminRouter);
 app.use(productRouter);
+app.use(userRouter);
 //connecting mongoose
 mongoose
     .connect(DB)

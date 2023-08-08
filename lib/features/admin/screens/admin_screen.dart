@@ -21,17 +21,26 @@ class AdminScreen extends StatefulWidget {
 class _AdminScreenState extends State<AdminScreen> {
   List<Product>? products;
   final AdminServices adminServices = AdminServices();
+  String useremail = '';
 
   @override
   void initState() {
     super.initState();
     fetchAllProducts();
+
   }
 
+  // fetchAllProducts() async {
+  //   products = await adminServices.fetchAllProducts(context);
+  //   setState(() {});
+  // }
+
+  //NEWLY ADDED____________________________________________________________________________
   fetchAllProducts() async {
-    products = await adminServices.fetchAllProducts(context);
+    products = await adminServices.fetchProducts(context, useremail);
     setState(() {});
   }
+  //--------------------------------------------------------------------------------------
 
   void deleteProduct(Product product, int index) {
     adminServices.deleteProduct(
@@ -50,7 +59,8 @@ class _AdminScreenState extends State<AdminScreen> {
 
   @override
   Widget build(BuildContext context) {
-    // final user = Provider.of<UserProvider>(context).user;
+    final user = Provider.of<UserProvider>(context).user;
+    useremail = user.email;
 
     // return Scaffold(
     //   body: Column(
@@ -64,33 +74,33 @@ class _AdminScreenState extends State<AdminScreen> {
     return products == null
         ? const Loader()
         : Scaffold(
-           appBar: PreferredSize(
-        preferredSize: const Size.fromHeight(50),
-        child: AppBar(
-          flexibleSpace: Container(
-            decoration: const BoxDecoration(
-              gradient: GlobalVariables.appBarGradient,
-            ),
-          ),title: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              // Container(
-              //   alignment: Alignment.topLeft,
-              //   child: Text()
-              // ),
-              const Text(
-                'Admin',
-                style: TextStyle(
-                  color: Colors.black,
-                  fontWeight: FontWeight.bold,
+            appBar: PreferredSize(
+              preferredSize: const Size.fromHeight(50),
+              child: AppBar(
+                flexibleSpace: Container(
+                  decoration: const BoxDecoration(
+                    gradient: GlobalVariables.appBarGradient,
+                  ),
                 ),
-              )
-            ],
-          ),
-        ),
-      ),
-            body: 
-            GridView.builder(
+                title: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    // Container(
+                    //   alignment: Alignment.topLeft,
+                    //   child: Text()
+                    // ),
+                    const Text(
+                      'Admin',
+                      style: TextStyle(
+                        color: Colors.black,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    )
+                  ],
+                ),
+              ),
+            ),
+            body: GridView.builder(
               itemCount: products!.length,
               gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                   crossAxisCount: 2),
@@ -105,24 +115,22 @@ class _AdminScreenState extends State<AdminScreen> {
                       ),
                     ),
                     Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      children: [
-                        Expanded(
-                          child: Text(
-                            productData.name,
-                            overflow: TextOverflow.ellipsis,
-                            maxLines: 2,
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: [
+                          Expanded(
+                            child: Text(
+                              productData.name,
+                              overflow: TextOverflow.ellipsis,
+                              maxLines: 2,
+                            ),
                           ),
-                        ),
-                        IconButton(
-                          onPressed: () => deleteProduct(productData, index),
-
-                          icon: const Icon(
-                            Icons.delete_outline,
+                          IconButton(
+                            onPressed: () => deleteProduct(productData, index),
+                            icon: const Icon(
+                              Icons.delete_outline,
+                            ),
                           ),
-                        ),
-                      ]
-                    )
+                        ])
                     //     SizedBox(height: 10),
                     //     ElevatedButton(
                     //   child: Text(
@@ -135,7 +143,6 @@ class _AdminScreenState extends State<AdminScreen> {
                     //     minimumSize: const Size(double.infinity, 50),
                     //   ),
                     // )
-                      
                   ],
                 );
               },

@@ -30,10 +30,21 @@ adminRouter.post("/admin/add-product", admin, async (req, res) => {
 
 
   // Get all your products
-  adminRouter.get("/admin/get-products", admin, async (req, res) => {
+  // adminRouter.get("/admin/get-products", admin, async (req, res) => {
+  //   try {
+  //     const products = await Product.find({});
+  //     res.json(products);
+  //   } catch (e) {
+  //     res.status(500).json({ error: e.message });
+  //   }
+  // });
+
+  //NEWLY ADDED : FETCHING ONLY THOSE PRODUCTS WHICH HAVE THE SAME EMAILID
+  adminRouter.get("/admin/get-products/:userId", admin, async (req, res) => {
     try {
-      const products = await Product.find({});
-      res.json(products);
+      const userId = req.params.userId;
+      const products = await Product.find({userId:userId}); 
+      res.json(products); 
     } catch (e) {
       res.status(500).json({ error: e.message });
     }

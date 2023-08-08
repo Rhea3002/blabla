@@ -102,28 +102,28 @@ class _HomeScreenState extends State<HomeScreen> {
         // ),
         // floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
 
-        floatingActionButton: ExpandableFAB(distance: 120, children: [
-          ActionButton(
-            icon: Icon(Icons.logout_outlined, color: Colors.white),
-            onPressed: () => AuthService().logOut(context),
-          ),
-          ActionButton(
-            icon: Icon(Icons.person, color: Colors.white),
-            onPressed: () {
-              Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) => const AccountScreen()));
-            },
-          ),
-          ActionButton(
-              icon: Icon(Icons.home, color: Colors.white),
-              onPressed: () {
-                Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => const AddCategory()));
-              }),
-        ]));
+        // floatingActionButton: ExpandableFAB(distance: 120, children: [
+        //   ActionButton(
+        //     icon: Icon(Icons.logout_outlined, color: Colors.white),
+        //     onPressed: () => AuthService().logOut(context),
+        //   ),
+        //   ActionButton(
+        //     icon: Icon(Icons.person, color: Colors.white),
+        //     onPressed: () {
+        //       Navigator.push(
+        //           context,
+        //           MaterialPageRoute(
+        //               builder: (context) => const AccountScreen()));
+        //     },
+        //   ),
+        //   ActionButton(
+        //       icon: Icon(Icons.home, color: Colors.white),
+        //       onPressed: () {
+        //         Navigator.push(
+        //             context,
+        //             MaterialPageRoute(
+        //                 builder: (context) => const AddCategory()));
+        //       }),
+        );
   }
 }

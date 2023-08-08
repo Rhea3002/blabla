@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 //connecting android simulator to our ip address
-String uri = 'http://192.168.0.4:3000';
+String uri = 'http://172.20.85.44:3000';
 
 //class that will have all static values
 class GlobalVariables {

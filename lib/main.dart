@@ -1,3 +1,4 @@
+import 'package:ecomm/common/widgets/bottombar.dart';
 import 'package:ecomm/constants/global_variables.dart';
 import 'package:ecomm/features/admin/screens/add_product_screen.dart';
 //import 'package:ecomm/features/admin/screens/add_product_screen.dart';
@@ -50,7 +51,7 @@ class _MyAppState extends State<MyApp> {
     // );
     home: Provider.of<UserProvider>(context).user.token.isNotEmpty
         ? Provider.of<UserProvider>(context).user.type == 'user'
-            ? const HomeScreen()
+            ? const BottomBar()
             : const AdminScreen()
         : const AuthScreen());
   }
