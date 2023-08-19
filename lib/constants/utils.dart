@@ -11,6 +11,15 @@ void showSnackBar(BuildContext context, String text) {
   );
 }
 
+void showSnackBar2(BuildContext context, String text) {
+  ScaffoldMessenger.of(context).showSnackBar(
+    SnackBar(
+      content: Text(text),
+      duration: Duration(seconds: 15),
+    ),
+  );
+}
+
 Future<List<File>> pickImages() async {
   List<File> images = [];
   try {

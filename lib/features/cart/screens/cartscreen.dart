@@ -12,6 +12,7 @@ import '../widgets/cart_subtotal.dart';
 class CartScreen extends StatefulWidget {
   const CartScreen({Key? key}) : super(key: key);
 
+
   @override
   State<CartScreen> createState() => _CartScreenState();
 }
@@ -113,6 +114,23 @@ class _CartScreenState extends State<CartScreen> {
       body: Column(
         children: [
           // const AddressBox(),
+         
+
+          Expanded(
+            child: ListView.builder(
+              itemCount: user.cart.length,
+              shrinkWrap: false,
+              physics: BouncingScrollPhysics(),
+              itemBuilder: (context, index) {
+                return Card(
+                  child: CartProduct(
+                    index: index,
+                  ),
+                );
+              },
+            ),
+          ),
+          const SizedBox(height: 5),
           const CartSubtotal(),
           Padding(
             padding: const EdgeInsets.all(8.0),
@@ -133,21 +151,6 @@ class _CartScreenState extends State<CartScreen> {
           Container(
             color: Colors.black12.withOpacity(0.08),
             height: 1,
-          ),
-          const SizedBox(height: 5),
-          
-          SizedBox(
-            height: MediaQuery.of(context).size.height- 285,
-            child: ListView.builder(
-              itemCount: user.cart.length,
-              shrinkWrap: false,
-              // physics: BouncingScrollPhysics(),
-              itemBuilder: (context, index) {
-                return CartProduct(
-                  index: index,
-                );
-              },
-            ),
           ),
         ],
       ),

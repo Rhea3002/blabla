@@ -10,10 +10,15 @@ import '../../../common/widgets/custom_button.dart';
 import '../../../common/widgets/stars.dart';
 import '../../../constants/global_variables.dart';
 import '../../../models/product.dart';
+import '../../../models/user.dart';
 import '../../../providers/user_provider.dart';
 import '../../cart/screens/cartscreen.dart';
 import '../../search/screens/search_screen.dart';
 import '../services/product_detail_services.dart';
+import 'dart:convert';
+import '../../../constants/error_handling.dart';
+import '../../../constants/utils.dart';
+import 'package:http/http.dart' as http;
 
 class ProductDetailScreen extends StatefulWidget {
   static const String routeName = '/product-details';
@@ -34,6 +39,8 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
   double myRating = 0;
 
   bool addedToCart = false;
+
+  // bool isProductFound = false;
 
   @override
   void initState() {
@@ -58,7 +65,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
 
   void goToCart() {
     Navigator.push(
-        context, MaterialPageRoute(builder: (context) => const CartScreen()));
+        context, MaterialPageRoute(builder: (context) => const BottomBar()));
   }
 
   void addToCart() {
@@ -66,8 +73,45 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
       context: context,
       product: widget.product,
     );
-    addedToCart = true; // Set to true when the button is clicked
+    addedToCart = true;
   }
+
+  // Future<void> addToCart() async {
+  //   final userProvider = Provider.of<UserProvider>(context, listen: false);
+
+  //   try {
+  //     http.Response res = await http.post(
+  //       Uri.parse('$uri/api/add-to-cart'),
+  //       headers: {
+  //         'Content-Type': 'application/json; charset=UTF-8',
+  //         'x-auth-token': userProvider.user.token,
+  //       },
+  //       body: jsonEncode({
+  //         'id': widget.product.id!, // Use widget.product to access the product
+  //       }),
+  //     );
+
+  //     httpErrorHandle(
+  //       response: res,
+  //       context: context,
+  //       onSuccess: () {
+  //         showSnackBar(context, "Product added successfully!");
+  //         User user =
+  //             userProvider.user.copyWith(cart: jsonDecode(res.body)['cart']);
+  //         userProvider.setUserFromModel(user);
+
+  //         // Check if the product was found in the cart
+  //         bool productFound = jsonDecode(res.body)['isProductFound'];
+  //         // Update the isProductFound state
+  //         setState(() {
+  //           addedToCart = productFound;
+  //         });
+  //       },
+  //     );
+  //   } catch (e) {
+  //     showSnackBar(context, e.toString());
+  //   }
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -151,7 +195,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                 style: const TextStyle(
                     color: Colors.white, fontWeight: FontWeight.bold),
               ),
-              position: badges.BadgePosition.topEnd(top: 4, end: 6),
+              position: badges.BadgePosition.topEnd(top: 4, end: 6), 
               badgeColor: Colors.cyan[800]!,
               animationDuration: Duration(milliseconds: 300),
               animationType: BadgeAnimationType.slide,
@@ -333,7 +377,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
       ),
       bottomNavigationBar: Container(
         child: CustomButton(
-          text: addedToCart ? 'Go to Cart' : 'Add to Cart',
+          text: addedToCart ? 'BROWSE FOR OTHER PRODUCTS' : 'ADD TO CART',
           onTap: addedToCart ? goToCart : addToCart,
           color: const Color.fromRGBO(254, 216, 19, 1),
         ),

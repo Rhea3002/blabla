@@ -5,6 +5,7 @@ import '../../../common/widgets/action_button.dart';
 import '../../../common/widgets/expandable.dart';
 import '../../../constants/global_variables.dart';
 import '../../auth/services/auth_service.dart';
+import '../widgets/orders.dart';
 import '../widgets/top_buttons.dart';
 
 class AccountScreen extends StatefulWidget {
@@ -69,7 +70,7 @@ class _AccountScreenState extends State<AccountScreen> {
             SizedBox(height: 10),
             TopButtons(),
             SizedBox(height: 20),
-            //Orders(),
+            Orders(),
           ],
         // ),
         // floatingActionButton: ExpandableFAB(distance: 120, children: [

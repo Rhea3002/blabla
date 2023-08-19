@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 
 import '../../../models/product.dart';
 import '../../../providers/user_provider.dart';
+import '../../product_details/screens/product_details_screen.dart';
 import '../../product_details/services/product_detail_services.dart';
 import '../services/cart_services.dart';
 
@@ -36,6 +37,14 @@ class _CartProductState extends State<CartProduct> {
     );
   }
 
+   void deleteQuantity(Product product) {
+    cartServices.removeFromCartFull(
+      context: context,
+      product: product,
+    );
+  }
+  
+
   @override
   Widget build(BuildContext context) {
     final productCart = context.watch<UserProvider>().user.cart[widget.index];
@@ -44,62 +53,71 @@ class _CartProductState extends State<CartProduct> {
 
     return Column(
       children: [
-        Container(
-          margin: const EdgeInsets.symmetric(
-            horizontal: 10,
-          ),
-          child: Row(
-            children: [
-              Image.network(
-                product.images[0],
-                fit: BoxFit.contain,
-                height: 135,
-                width: 135,
-              ),
-              Column(
-                children: [
-                  Container(
-                    width: 235,
-                    padding: const EdgeInsets.symmetric(horizontal: 10),
-                    child: Text(
-                      product.name,
-                      style: const TextStyle(
-                        fontSize: 16,
+        GestureDetector(
+          onTap: (){
+            Navigator.pushNamed(
+                            context,
+                            ProductDetailScreen.routeName,
+                            arguments: product,
+                          );
+          },
+          child: Container(
+            margin: const EdgeInsets.symmetric(
+              horizontal: 10,
+            ),
+            child: Row(
+              children: [
+                Image.network(
+                  product.images[0],
+                  fit: BoxFit.contain,
+                  height: 135,
+                  width: 135,
+                ),
+                Column(
+                  children: [
+                    Container(
+                      width: 235,
+                      padding: const EdgeInsets.symmetric(horizontal: 10),
+                      child: Text(
+                        product.name,
+                        style: const TextStyle(
+                          fontSize: 16,
+                        ),
+                        maxLines: 2,
                       ),
-                      maxLines: 2,
                     ),
-                  ),
-                  Container(
-                    width: 235,
-                    padding: const EdgeInsets.only(left: 10, top: 5),
-                    child: Text(
-                      '\u{20B9} ${product.price}',
-                      style: const TextStyle(
-                        fontSize: 20,
-                        fontWeight: FontWeight.bold,
+                    Container(
+                      width: 235,
+                      padding: const EdgeInsets.only(left: 10, top: 5),
+                      child: Text(
+                        '\u{20B9} ${product.price}',
+                        style: const TextStyle(
+                          fontSize: 20,
+                          fontWeight: FontWeight.bold,
+                        ),
+                        maxLines: 2,
                       ),
-                      maxLines: 2,
                     ),
-                  ),
-                  Container(
-                    width: 235,
-                    padding: const EdgeInsets.only(left: 10),
-                    child: const Text('Eligible for FREE Shipping'),
-                  ),
-                  Container(
-                    width: 235,
-                    padding: const EdgeInsets.only(left: 10, top: 5),
-                    child: const Text(
-                      'In Stock',
-                      style: TextStyle(
-                        color: Colors.teal,
+                    Container(
+                      width: 235,
+                      padding: const EdgeInsets.only(left: 10),
+                      child: const Text('Eligible for FREE Shipping'),
+                    ),
+                    Container(
+                      width: 235,
+                      padding: const EdgeInsets.only(left: 10, top: 5),
+                      child: const Text(
+                        'In Stock',
+                        style: TextStyle(
+                          color: Colors.teal,
+                        ),
+                        maxLines: 2,
                       ),
-                      maxLines: 2,
                     ),
-                  ),
-                ],
-              ),
-            ],
+                  ],
+                ),
+              ],
+            ),
           ),
         ),
         Container(
@@ -160,6 +178,32 @@ class _CartProductState extends State<CartProduct> {
                   ],
                 ),
               ),
+              //-------------------------------------------------------- DELETE BUTTON
+              Container(
+                decoration: BoxDecoration(
+                  border: Border.all(
+                    color: Colors.black12,
+                    width: 1.5,
+                  ),
+                  borderRadius: BorderRadius.circular(5),
+                  color: Colors.black12,
+                ),
+                child: Row(
+                  children: [
+                    InkWell(
+                      onTap: () => deleteQuantity(product),
+                      child: Container(
+                        width: 35, 
+                        height: 32,
+                        alignment: Alignment.center,
+                        child: const Icon(
+                          Icons.delete_outline_rounded,
+                          size: 24,
+                        ),
+                      ),
+                    ),],
+                    ),
+                    )
             ],
           ),
         ),

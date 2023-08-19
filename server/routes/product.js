@@ -44,7 +44,7 @@ productRouter.post("/api/rate-product", auth, async (req, res) => {
         product.ratings.splice(i, 1);
         break;
       }
-    }
+    } 
 
     const ratingSchema = {
       userId: req.user,

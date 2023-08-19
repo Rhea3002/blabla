@@ -31,7 +31,7 @@ adminRouter.post("/admin/add-product", admin, async (req, res) => {
 
   //Get all your products
   adminRouter.get("/admin/get-products", admin, async (req, res) => {
-    try {
+    try { 
       const products = await Product.find({});
       res.json(products);
     } catch (e) {
@@ -51,5 +51,26 @@ adminRouter.post("/admin/delete-product", admin, async (req, res) => {
     res.status(500).json({ error: e.message });
   }
 });
+
+// Update products
+adminRouter.post("/admin/update-product", admin, async (req, res) => {
+  try {
+    const { id, name, price, description, quantity, images, ram, rom, screentech, os, keywordlist } = req.body;
+    const updatedProduct = await Product.findByIdAndUpdate(
+      id,
+      { name, price, description, quantity, images, ram, rom, screentech, os, keywordlist },
+      { new: true } // Return the updated product
+    );
+
+    if (!updatedProduct) {
+      return res.status(404).json({ error: "Product not found" });
+    }
+
+    res.json(updatedProduct);
+  } catch (e) {
+    res.status(500).json({ error: e.message });
+  }
+});
+
 
 module.exports = adminRouter;

@@ -6,7 +6,7 @@ import 'package:ecomm/features/admin/services/admin_services.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import '../../../common/widgets/custom_textfield.dart';
+import '../../../common/widgets/custom_textfield.dart'; 
 import '../../../constants/utils.dart';
 import '../../../providers/user_provider.dart';
 import '../../auth/services/auth_service.dart';
@@ -110,7 +110,7 @@ class _AddProductScreenState extends State<AddProductScreen> {
         ),
         body: SingleChildScrollView(
           child: Form(
-              key: _addProductFormKey,
+              key: _addProductFormKey, 
               child: Padding(
                 padding: EdgeInsets.symmetric(horizontal: 10.0),
                 child: Column(

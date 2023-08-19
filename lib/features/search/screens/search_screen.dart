@@ -82,7 +82,7 @@ class _SearchScreenState extends State<SearchScreen> {
                 // const AddressBox(),
                 const SizedBox(height: 10),
                 Expanded(
-                  child: ListView.builder(
+                  child: ListView.builder( 
                     itemCount: products!.length, 
                     itemBuilder: (context, index) {
                       return GestureDetector(

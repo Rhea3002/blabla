@@ -6,9 +6,9 @@ const { Product } = require("../models/product");
 const User = require("../models/user");
 
 userRouter.post("/api/add-to-cart", auth, async (req, res) => { 
-  try {
+  try { 
     const { id } = req.body;
-    const product = await Product.findById(id);
+    const product = await Product.findById(id); 
     let user = await User.findById(req.user);
 
     if (user.cart.length == 0) {
@@ -58,6 +58,27 @@ userRouter.delete("/api/remove-from-cart/:id", auth, async (req, res) => {
     res.status(500).json({ error: e.message });
   }
 });
+
+//---------------------NEW
+userRouter.post("/api/delete-from-cart", auth, async (req, res) => {
+  try {
+    const { id } = req.body; 
+    const product = await Product.findById(id);
+    let user = await User.findById(req.user);
+
+    const index = user.cart.findIndex(cartItem => cartItem.product._id.equals(id));
+    if (index !== -1) {
+      user.cart.splice(index, 1); 
+      user = await user.save();
+      res.json(user);
+    } else {
+      res.status(404).json({ error: "Item not found in cart" });
+    }
+  } catch (e) {
+    res.status(500).json({ error: e.message });
+  }
+});
+
 
 // save user address
 userRouter.post("/api/save-user-address", auth, async (req, res) => {

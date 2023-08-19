@@ -80,6 +80,70 @@ class AdminServices {
     }
   }
 
+  //--------------------------------------------------------------------------------------------------------------------------
+  Future<void> updateProductService({
+    required BuildContext context,
+    String? id,
+    required String updatedProduct,
+    required String updatedDesc,
+    required double updatedPrice,
+    required double updatedRAM,
+    required double updatedROM,
+    required String updatedScreen,
+    required String updatedOS,
+    required double updatedQty,
+    required String folderId,
+    required List<File> updatedImages,
+    required List<String> keywordlist,
+    required String userId,
+  }) async {
+    final userProvider = Provider.of<UserProvider>(context, listen: false);
+
+    try {
+      final cloudinary = CloudinaryPublic('dzbnjysjj', 'hxsmg8kf');
+      List<String> updatedImageUrls = [];
+
+      for (int i = 0; i < updatedImages.length; i++) {
+        CloudinaryResponse res = await cloudinary.uploadFile(
+          CloudinaryFile.fromFile(updatedImages[i].path, folder: folderId),
+        );
+        updatedImageUrls.add(res.secureUrl);
+      }
+
+      http.Response res = await http.post(
+        Uri.parse('$uri/admin/update-product'),
+        headers: {
+          'Content-Type': 'application/json; charset=UTF-8',
+          'x-auth-token': userProvider.user.token,
+        },
+        body: jsonEncode({
+          'id': id,
+          'name': updatedProduct,
+          'price': updatedPrice,
+          'description': updatedDesc,
+          'quantity': updatedQty,
+          'images': updatedImageUrls,
+          'ram': updatedRAM,
+          'rom': updatedROM,
+          'screentech': updatedScreen,
+          'os': updatedOS,
+          'keywordlist': keywordlist,
+        }),
+      );
+      httpErrorHandle(
+        response: res,
+        context: context,
+        onSuccess: () {
+          showSnackBar(context, 'Product Updated Successfully!');
+          Navigator.pop(context);
+        },
+      );
+    } catch (e) {
+      showSnackBar(context, e.toString());
+    }
+  }
+
+  //---------------------------------------------------------------------------------------------------------------------
   // get all the products
   // Future<List<Product>> fetchAllProducts(BuildContext context) async {
   //   final userProvider = Provider.of<UserProvider>(context, listen: false);

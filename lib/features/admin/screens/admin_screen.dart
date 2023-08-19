@@ -1,4 +1,5 @@
 import 'package:ecomm/features/admin/screens/add_product_screen.dart';
+import 'package:ecomm/features/admin/screens/edit_product_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -37,26 +38,6 @@ fetchAllProducts() async {
   });
 }
 
-
-//   fetchAllProducts() async {
-//   final userProvider = Provider.of<UserProvider>(context, listen: false);
-
-//   try {
-//     products = await adminServices.fetchAllProducts(context, userProvider.user.email);
-//     setState(() {});
-//   } catch (e) {
-//     showSnackBar(context, e.toString());
-//   }
-// }
-
-
-  //NEWLY ADDED____________________________________________________________________________
-  // fetchAllProducts() async {
-  //   products = await adminServices.fetchProducts(context, useremail);
-  //   setState(() {});
-  // }
-  //--------------------------------------------------------------------------------------
-
   void deleteProduct(Product product, int index) {
     adminServices.deleteProduct(
       context: context,
@@ -76,15 +57,6 @@ fetchAllProducts() async {
   Widget build(BuildContext context) {
     final user = Provider.of<UserProvider>(context).user;
     username = user.name;
-
-    // return Scaffold(
-    //   body: Column(
-    //     mainAxisAlignment: MainAxisAlignment.center,
-    //     children: [
-    //       Center(child: Text(user.toJson())),
-    //       const Text("AdminScreen Page"),
-    //     ],
-    //   ),
 
     return products == null
         ? const Scaffold(body: Loader())
@@ -114,52 +86,55 @@ fetchAllProducts() async {
                 ),
               ),
             ),
-            body: GridView.builder(
-              itemCount: products!.length,
-              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisCount: 2),
-              itemBuilder: (context, index) {
-                final productData = products![index];
-                return Column(
-                  children: [
-                    SizedBox(
-                      height: 140,
-                      child: SingleProduct(
-                        image: productData.images[0],
+            body: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: GridView.builder(
+                itemCount: products!.length,
+                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                    crossAxisCount: 2),
+                itemBuilder: (context, index) {
+                  final productData = products![index];
+                  return Column(
+                    children: [
+                      SizedBox(
+                        height: 140,
+                        child: SingleProduct(
+                          image: productData.images[0],
+                        ),
                       ),
-                    ),
-                    Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        children: [
-                          Expanded(
-                            child: Text(
-                              productData.name,
-                              overflow: TextOverflow.ellipsis,
-                              maxLines: 2,
+                      Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          children: [
+                            Expanded(
+                              child: Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: Text(
+                                  productData.name,
+                                  overflow: TextOverflow.ellipsis,
+                                  maxLines: 2,
+                                ),
+                              ),
                             ),
-                          ),
-                          IconButton(
-                            onPressed: () => deleteProduct(productData, index),
-                            icon: const Icon(
-                              Icons.delete_outline,
+                            IconButton(
+                              onPressed: () {
+                                Navigator.push(
+                                  context, MaterialPageRoute(builder: (context) => EditProductScreen(product: products![index],)));
+                              },
+                              icon: const Icon(
+                                Icons.edit,
+                              ),
                             ),
-                          ),
-                        ])
-                    //     SizedBox(height: 10),
-                    //     ElevatedButton(
-                    //   child: Text(
-                    //     'LOGOUT',
-                    //   ),
-                    //   onPressed: () {
-                    //     AuthService().logOut(context);
-                    //   },
-                    //   style: ElevatedButton.styleFrom(
-                    //     minimumSize: const Size(double.infinity, 50),
-                    //   ),
-                    // )
-                  ],
-                );
-              },
+                            IconButton(
+                              onPressed: () => deleteProduct(productData, index), 
+                              icon: const Icon(
+                                Icons.delete_outline,
+                              ),
+                            ),
+                          ])
+                    ],
+                  );
+                },
+              ),
             ),
             floatingActionButton: FloatingActionButton(
               onPressed: () => navigateToAddProduct(),

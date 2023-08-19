@@ -24,7 +24,7 @@ class _BottomBarState extends State<BottomBar> {
   double bottomBarWidth = 42;
   double bottomBarBorderWidth = 5;
 
-  void navigateToCartTab() {
+  void navigateToCartPage() {
     setState(() {
       _page = 2; // Set the active tab index to 2 (Cart)
     });
@@ -46,7 +46,7 @@ class _BottomBarState extends State<BottomBar> {
     Navigator.pushNamed(context, SearchScreen.routeName, arguments: query);
   }
 
-  @override
+  @override 
   Widget build(BuildContext context) {
     final userCartLen = context.watch<UserProvider>().user.cart.length;
     // final args = ModalRoute.of(context)!.settings.arguments;
@@ -58,6 +58,7 @@ class _BottomBarState extends State<BottomBar> {
       //-----------------------APPBAR--------------------------
       appBar: AppBar(
           backgroundColor: Colors.cyan[300],
+          automaticallyImplyLeading: false,
           title: Row(
             children: [
               Expanded(

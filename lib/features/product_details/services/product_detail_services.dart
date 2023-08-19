@@ -31,13 +31,20 @@ class ProductDetailsServices {
       );
 
       httpErrorHandle(
-        response: res,
+        response: res, 
         context: context,
         onSuccess: () {
           showSnackBar(context, "Product added successfully!");
           User user =
               userProvider.user.copyWith(cart: jsonDecode(res.body)['cart']);
           userProvider.setUserFromModel(user);
+
+          // Check if the product was found in the cart
+        // bool productFound = jsonDecode(res.body)['isProductFound'];
+
+        // setState(() {
+        //   isProductFound = productFound;
+        // });
         },
       );
     } catch (e) {

@@ -70,6 +70,7 @@ class _CustomTextFieldState extends State<CustomTextField> {
       keyboardType: widget.keyboardType,
       obscureText: isPassword && _obscureText,
       decoration: InputDecoration(
+        labelText: widget.hintText,
         hintText: widget.hintText,
         border: const OutlineInputBorder(
           borderSide: BorderSide(

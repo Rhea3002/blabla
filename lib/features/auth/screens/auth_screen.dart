@@ -120,7 +120,7 @@ class _AuthScreenState extends State<AuthScreen> {
                       child: Column(
                         children: [
                           //Email TextField
-                            
+                             
                           Padding(
                             padding: const EdgeInsets.symmetric(horizontal: 25.0),
                             child: Container(
