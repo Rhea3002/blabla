@@ -12,7 +12,7 @@ const userRouter = require("./routes/user");
 // const userRouter = require("./routes/user");
 
 //INIT
-const PORT = 3000;
+const PORT = process.env.PORT || 3000;
 const app = express(); //same as initiallising main.dart
 const DB = "mongodb+srv://rhea:Mongo123@cluster0.6lfdkly.mongodb.net/?retryWrites=true&w=majority";
 

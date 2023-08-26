@@ -10,7 +10,7 @@ import 'package:ecomm/route.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import 'features/admin/screens/admin_screen.dart';
+// import 'features/admin/screens/admin_screen.dart';
 
 void main() {
   runApp(MultiProvider(

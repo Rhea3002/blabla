@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 //connecting android simulator to our ip address
-String uri = 'http://172.20.85.44:3000';
+String uri = 'blabla-lx1eswxke-rhea3002.vercel.app';
 
 //class that will have all static values
 class GlobalVariables {
@@ -22,6 +22,7 @@ class GlobalVariables {
 
 // STATIC IMAGES
   static const List<String> carouselImages = [
+    'https://rukminim1.flixcart.com/fk-p-flap/1600/270/image/5f478a106d047aba.jpg?q=20',
     'https://images-eu.ssl-images-amazon.com/images/G/31/img21/Wireless/WLA/TS/D37847648_Accessories_savingdays_Jan22_Cat_PC_1500.jpg',
     'https://images-eu.ssl-images-amazon.com/images/G/31/img2021/Vday/bwl/English.jpg',
     'https://images-eu.ssl-images-amazon.com/images/G/31/img22/Wireless/AdvantagePrime/BAU/14thJan/D37196025_IN_WL_AdvantageJustforPrime_Jan_Mob_ingress-banner_1242x450.jpg',

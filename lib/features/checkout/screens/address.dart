@@ -109,21 +109,21 @@ class _DelAddressScreenState extends State<DelAddressScreen> {
               ),
             ),
           ),
-          GooglePayButton(
-            width: double.infinity,
+          // GooglePayButton(
+          //   width: double.infinity,
 
-            // onPressed: () => payPressed(),
-            paymentConfigurationAsset: 'gpay.json',
-            onPaymentResult: onGooglePayResult,
-            paymentItems: paymentItems,
-            height: 50,
-            //style: GooglePayButtonStyle.black,
-            type: GooglePayButtonType.buy,
-            margin: const EdgeInsets.only(top: 15),
-            loadingIndicator: const Center(
-              child: CircularProgressIndicator(),
-            ),
-          ),
+          //   // onPressed: () => payPressed(),
+          //   paymentConfigurationAsset: 'gpay.json',
+          //   onPaymentResult: onGooglePayResult,
+          //   paymentItems: paymentItems,
+          //   height: 50,
+          //   //style: GooglePayButtonStyle.black,
+          //   type: GooglePayButtonType.buy,
+          //   margin: const EdgeInsets.only(top: 15),
+          //   loadingIndicator: const Center(
+          //     child: CircularProgressIndicator(),
+          //   ),
+          // ),
           SizedBox(
             height: 25,
           ),
